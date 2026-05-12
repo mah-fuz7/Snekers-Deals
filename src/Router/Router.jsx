@@ -1,23 +1,66 @@
 import { createBrowserRouter } from "react-router";
+import Rootlayout from "../Layouts/Rootlayout";
+import Home from "../Pages/Home";
+import Login from "../Pages/Login";
+import AddProduct from "../Pages/AddProduct";
+import Bid from "../Pages/Bid";
+import MyBids from "../Pages/MyBids";
+import Myproduct from "../Pages/Myproduct";
+import ProductDetails from "../Pages/ProductDetails";
+import Register from "../Pages/Register";
+import Allproduct from "../Pages/Allproducts";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div><div className="card bg-base-100 w-96 shadow-sm">
-  <figure className="px-10 pt-10">
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-      alt="Shoes"
-      className="rounded-xl" />
-  </figure>
-  <div className="card-body items-center text-center">
-    <h2 className="card-title">Card Title</h2>
-    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-    <div className="card-actions">
-      <button className="btn btn-primary">Buy Now</button>
-    </div>
-  </div>
-</div></div>,
+    element: <Rootlayout></Rootlayout>,
+    children:[
+      {
+        path:'/',
+        index:true,
+        element:<Home></Home>
+      },
+      {
+        path:'/allproducts',
+        index:true,
+        element:<Allproduct></Allproduct>
+      },
+      {
+        path:'/login',
+        index:true,
+        element:<Login></Login>
+      },
+      {
+        path:'/addproduct',
+        index:true,
+        element:<AddProduct></AddProduct>
+      },
+      {
+        path:'/bid',
+        index:true,
+        element:<Bid></Bid>
+      },
+      {
+        path:'/mybids',
+        index:true,
+        element:<MyBids></MyBids>
+      },
+      {
+        path:'/myproducts',
+        index:true,
+        element:<Myproduct></Myproduct>
+      },
+      {
+        path:'/productdetails',
+        index:true,
+        element:<ProductDetails></ProductDetails>
+      },
+      {
+        path:'/register',
+        index:true,
+        element:<Register></Register>
+      },
+    ]
   },
 ]);
 export default router

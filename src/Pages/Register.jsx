@@ -13,6 +13,30 @@ const handleGoogleSignIn = async()=>{
     try{
         const result=await SignInWithGoogleFunc()
         setUser(result.user)
+        
+        // newUser
+        const newUser ={
+          name :result.user.displayName,
+          email:result.user.email,
+          image:result.user.PhotoURL
+        }
+
+// create a new User for database
+fetch('http://localhost:3000/users',{
+  method:'POST',
+  headers: {
+    'content-type':'application/json'
+  },
+  body:JSON.stringify(newUser)
+})
+.then(res =>res.json())
+.then(data => {
+  console.log("data after user save",data)
+})
+
+
+
+
         toast.success("User Sign In Successfully")
         console.log(user)
     }

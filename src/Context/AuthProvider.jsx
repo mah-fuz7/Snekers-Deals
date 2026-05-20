@@ -16,6 +16,8 @@ const Provider= new GoogleAuthProvider()
     // GOOGLE SIGN IN FUNC
    const SignInWithGoogleFunc = () =>{
     setLoading(true)
+
+    
     return signInWithPopup(auth,Provider)
    }
     // EMAIL-PASSWORD SIGN IN

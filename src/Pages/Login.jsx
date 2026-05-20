@@ -1,12 +1,53 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../Context/AuthContext";
+import { toast } from "react-toastify";
+import { Link } from "react-router";
 
  
 
 const Login = () => {
      const [showPassword, setShowPassword] = useState(false);
+     const [email,setEmail]=useState(null)
+     const {loginFunc,user,setUser,forgotPasswordFunc}=useContext(AuthContext)
+// console.log(email)
+
+    //  HANDLE LOGIN FUNC
+    const handleLogin =async (e) =>{
+     e.preventDefault()
+      const email=e.target.email.value;
+      const password=e.target.password.value;
+    console.log({email,password})
+   try {
+    
+    // login Func
+    const result=await loginFunc(email,password)
+    // Update the State
+setUser(result.user)
+toast.success("User Login Successfully")
+console.log(user)
+   } catch (error) {
+    toast.error(error.message)
+   }
+    }
+
+// HANDLE FORGOT PASSWORD
+const handleForgotPassword =async()=>{
+  if(!email){
+   return toast.error("Enter Your email")
+  }
+  
+  try {
+    await forgotPasswordFunc(email)
+    toast.success("Password Reset Email sent")
+  } catch (error) {
+  
+    toast.error(error.message)
+  }
+}
+    
     return (
         <div>
-(
+
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
@@ -14,14 +55,15 @@ const Login = () => {
         </h2>
         <p className="text-sm text-center text-gray-500 mb-6">
           Don’t have an account?{" "}
-          <a href="#" className="text-purple-600 hover:underline">
+          <Link to={"/signin"} className="text-purple-600 hover:underline">
             Register Now
-          </a>
+          </Link>
         </p>
 
-        <form className="space-y-4">
+        <form onChange={(e)=>setEmail(e.target.value)} onSubmit={handleLogin} className="space-y-4">
           <input
             type="email"
+            name="email"
             placeholder="Email"
             className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none"
           />
@@ -31,6 +73,7 @@ const Login = () => {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Password"
+              name="password"
               className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none pr-10"
             />
             <button
@@ -82,7 +125,7 @@ const Login = () => {
 
           {/* Forgot password on left */}
           <div className="text-left">
-            <a href="#" className="text-sm text-purple-600 hover:underline">
+            <a onClick={handleForgotPassword} href="#" className="text-sm text-purple-600 hover:underline">
               Forgot password?
             </a>
           </div>

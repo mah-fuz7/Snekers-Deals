@@ -133,10 +133,10 @@ console.log("btn click")
         {user?.displayName}
         </h2>
 
-        <p className="text-gray-500 text-sm mt-1">
-         <p className="ml-8">  {user?.email}</p>
+        <div className="text-gray-500 text-sm mt-1">
+         <h1 className="ml-8">  {user?.email}</h1>
           {user?.metadata?.creationTime}
-        </p>
+        </div>
       </div>
 
       {/* Buttons */}

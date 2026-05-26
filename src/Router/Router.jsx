@@ -22,42 +22,44 @@ const router = createBrowserRouter([
       },
       {
         path:'/allproducts',
-        index:true,
+        
         element:<Allproduct></Allproduct>
       },
       {
         path:'/login',
-        index:true,
+        
         element:<Login></Login>
       },
       {
         path:'/addproduct',
-        index:true,
+        
         element:<AddProduct></AddProduct>
       },
       {
         path:'/bid',
-        index:true,
+        
         element:<Bid></Bid>
       },
       {
         path:'/mybids',
-        index:true,
+        
         element:<MyBids></MyBids>
       },
       {
         path:'/myproducts',
-        index:true,
+        
         element:<Myproduct></Myproduct>
       },
       {
-        path:'/productdetails',
-        index:true,
+        path:'/productdetails/:id',
+        loader:async({params})=> {
+          const res=await fetch(`http://localhost:3000/products/${params.id}`);
+          return res.json()
+        },
         element:<ProductDetails></ProductDetails>
       },
       {
         path:'/signin',
-        index:true,
         element:<Register></Register>
       },
     ]

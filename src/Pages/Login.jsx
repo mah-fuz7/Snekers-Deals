@@ -1,16 +1,28 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 
  
 
 const Login = () => {
-     const [showPassword, setShowPassword] = useState(false);
-     const [email,setEmail]=useState(null)
-     const {loginFunc,user,setUser,forgotPasswordFunc}=useContext(AuthContext)
-// console.log(email)
+  const navigate=useNavigate();
+  const location=useLocation();
+  const form=location.state?.pathname || "/";
 
+     const [showPassword, setShowPassword] = useState(false);
+     const [email,setEmail]=useState("")
+     const {loginFunc,user,setUser,forgotPasswordFunc,SignInWithGoogleFunc}=useContext(AuthContext)
+// HANDLE GOOGLE LOGIN
+const handleGooleLogin =async() =>{
+try{
+  await SignInWithGoogleFunc()
+  navigate(form,{replace:true})
+  toast.success("User Login Successfully")
+}catch(error){
+  toast.error(error.message)
+}
+}
     //  HANDLE LOGIN FUNC
     const handleLogin =async (e) =>{
      e.preventDefault()
@@ -24,6 +36,8 @@ const Login = () => {
     // Update the State
 setUser(result.user)
 toast.success("User Login Successfully")
+  navigate(form,{replace:true})
+
 console.log(user)
    } catch (error) {
     toast.error(error.message)
@@ -60,8 +74,9 @@ const handleForgotPassword =async()=>{
           </Link>
         </p>
 
-        <form onChange={(e)=>setEmail(e.target.value)} onSubmit={handleLogin} className="space-y-4">
+        <form   onSubmit={handleLogin} className="space-y-4">
           <input
+          onChange={(e)=>setEmail(e.target.value)}
             type="email"
             name="email"
             placeholder="Email"
@@ -144,7 +159,7 @@ const handleForgotPassword =async()=>{
           <hr className="flex-grow border-gray-300" />
         </div>
 
-        <button className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-md hover:bg-gray-50 transition">
+        <button onClick={handleGooleLogin} className="w-full flex items-center justify-center border border-gray-300 py-2 rounded-md hover:bg-gray-50 transition">
           <img
             src="https://www.svgrepo.com/show/355037/google.svg"
             alt="Google"

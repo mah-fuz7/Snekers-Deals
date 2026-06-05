@@ -5,14 +5,22 @@ import Swal from "sweetalert2";
 const MyBids = () => {
   const [bids, setBids] = useState([]);
   const { user } = useContext(AuthContext);
-
+const token=user?.accessToken
+console.log(token)
   useEffect(() => {
-    fetch(`http://localhost:3000/users/bids?email=${user?.email}`)
+    fetch(`http://localhost:3000/users/bids?email=${user?.email}`,{
+      headers: {
+        authorization : `Bearer ${token}`
+      }
+    }
+      
+    )
+    
       .then((res) => res.json())
       .then((result) =>
         setBids(result.sort((a, b) => Number(b.bid_price) - Number(a.bid_price)))
       );
-  }, [user?.email]);
+  }, [user?.email,token]);
 
   const handleRemove = (id) => {
     Swal.fire({

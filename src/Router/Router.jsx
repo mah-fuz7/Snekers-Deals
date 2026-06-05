@@ -9,6 +9,7 @@ import Myproduct from "../Pages/Myproduct";
 import ProductDetails from "../Pages/ProductDetails";
 import Register from "../Pages/Register";
 import Allproduct from "../Pages/Allproducts";
+import PrivateRouter from "../Private/PrivateRouter";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,9 @@ const router = createBrowserRouter([
       {
         path:'/allproducts',
         
-        element:<Allproduct></Allproduct>
+        element:<PrivateRouter>
+          <Allproduct></Allproduct>
+        </PrivateRouter>
       },
       {
         path:'/login',
@@ -33,22 +36,30 @@ const router = createBrowserRouter([
       {
         path:'/addproduct',
         
-        element:<AddProduct></AddProduct>
+        element:<PrivateRouter>
+          <AddProduct></AddProduct>
+        </PrivateRouter>
       },
       {
         path:'/bid',
         
-        element:<Bid></Bid>
+        element:<PrivateRouter>
+          <Bid></Bid>
+        </PrivateRouter>
       },
       {
         path:'/mybids',
         
-        element:<MyBids></MyBids>
+        element:<PrivateRouter>
+          <MyBids></MyBids>
+        </PrivateRouter>
       },
       {
         path:'/myproducts',
         
-        element:<Myproduct></Myproduct>
+        element:<PrivateRouter>
+          <Myproduct></Myproduct>
+        </PrivateRouter>
       },
       {
         path:'/productdetails/:id',
@@ -56,7 +67,9 @@ const router = createBrowserRouter([
           const res=await fetch(`http://localhost:3000/products/${params.id}`);
           return res.json()
         },
-        element:<ProductDetails></ProductDetails>
+        element:<PrivateRouter>
+          <ProductDetails></ProductDetails>
+        </PrivateRouter>
       },
       {
         path:'/signin',
